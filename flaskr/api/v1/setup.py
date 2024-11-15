@@ -1,8 +1,8 @@
-from crypt import methods
+import time
 
 from flask import request
 
-from flaskr.api.utils import response_json, response_accepted, response_bad
+from flaskr.api.utils import response_json, response_accepted, response_bad, response_event_stream
 from flaskr.db import get_db
 
 def api_v1_setup(app):
@@ -36,3 +36,13 @@ def api_v1_setup(app):
             print(username + password)
             print("Executed")
             return response_accepted()
+
+    @app.route('/api/v1/events')
+    def events():
+        print("Starting Stream")
+        def event_stream():
+            while True:
+                yield f"data: {{'message': 'Hello from Flask'}}\n\n"
+                time.sleep(1)  # Wait 1 second before sending next event
+
+        return response_event_stream(event_stream())

@@ -1,4 +1,8 @@
-const api_uri = "http://127.0.0.1:5000/api/v1"
+const api_uri = "//127.0.0.1:5000/api/v1"
+
+export function get_server_event_source() {
+    return new EventSource(api_uri + "/events")
+}
 
 export async function get_api_request(req:string): Promise<any> {
   return await fetch(api_uri + req).then(async response => {

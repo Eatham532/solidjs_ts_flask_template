@@ -1,6 +1,9 @@
 from flask import Response, jsonify
 
 
+def response_event_stream(event_stream):
+    return Response(event_stream, mimetype="text/event-stream")
+
 def response_json(resp):
     return jsonify(resp)
 
